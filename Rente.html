@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=320, initial-scale=1">
+    <meta charset="utf-8">
+    
+  </head>
+  <title>Zinseszinsrechner</title>
+     <meta http-equiv="Conten-Type" content="text/html; charset=utf-8">
+
+     <script>
+          "use strict";
+     
+         function fRechner(){
+   var vZinssatz = document.getElementById("idZinssatz").value;
+           var vRente = document.getElementById("idRente").value;
+           var vlaufzeitJahre = document.getElementById("idlaufzeitJahre").value;
+           var vRentenendwert;
+           var vJahr = 0;
+           var vZinsen;
+           var vRenteJahresende;
+           var vRenteJahresanfang = vRente;
+           var vAusgabe;
+           
+            var vZinsfaktor = 1 + vZinssatz / 100;
+var vRentenendwert = vRente * (Math.pow(vZinsfaktor, vlaufzeitJahre) - 1) / (vZinsfaktor - 1);
+           
+           vAusgabe ="";
+           vAusgabe = vAusgabe + "Das Endkapital beträgt " + vRentenendwert + "€ <br>";
+           vAusgabe = vAusgabe + "<table border=1>";
+           vAusgabe = vAusgabe + "<tr><th>Jahr</th><th>Kapital am 1.1.</th><th>Zinsen am 31.12.</th><th>Rente am 31.12.</th><th> Kapital am 31.12 </th></tr>";
+      
+           
+           while (vJahr <= vlaufzeitJahre) {
+vZinsen = vRenteJahresanfang * (vZinssatz/100);
+ vRenteJahresende = vRenteJahresanfang + vZinsen;
+             
+             if (vJahr == vlaufzeitJahre) {
+vAusgabe = vAusgabe + "<tr><td>" + vJahr + "</td><td>" + vRenteJahresanfang + "</td><td>0</td><td>0</td></tr>";
+               
+                    }
+             
+             else { 
+                    vAusgabe= vAusgabe + "<tr><td>" + vJahr + "</td><td>" + vRenteJahresanfang + "</td><td>" + vZinsen + "</td><td>" + vRenteJahresende + "</td></tr>";
+                    }
+             
+                    vRenteJahresanfang = vRenteJahresende;
+                    vJahr = vJahr+1;
+             vAusgabe = vAusgabe + "</table>";
+             
+               }
+               document.getElementById("idAusgabe").innerHTML = vAusgabe;
+         }
+       
+
+       
+  </script>        
+  <body>
+    Zinssatz :   <input id="idZinssatz" type="text" value="2">% <br>
+    Nachschüssige Rente:  <input id="idRente" type="text" value="100">€ <br>
+   Laufzeit:  <input id="idlaufzeitJahre" type="text" value="5">  Jahre
+    <br>
+    <br>
+        <button onClick="fRechner();">Berechnen</button>
+    
+  </body>
+</html>
